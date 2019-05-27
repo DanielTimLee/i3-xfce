@@ -1,9 +1,14 @@
-    - name: Add PPA repositories
-      apt_repository: repo='{{item}}' state=present update_cache=true
-      with_items: 
-       - ppa:aacebedo/fasd
-       - ppa:nilarimogard/webupd8
- 
+    - name: Add Albert PPA repositories
+      shell: echo 'deb http://download.opensuse.org/repositories/home:/manuelschneid3r/xUbuntu_18.04/ /' > /etc/apt/sources.list.d/home:manuelschneid3r.list
+
+    - name: Add Albert Release Key
+      apt_key:
+        url: http://download.opensuse.org/repositories/home:/manuelschneid3r/xUbuntu_18.04/Release.key
+        state: present
+
+    - name: Update Apt
+      shell: sudo apt update
+
     - name: Install packages using apt
       apt: pkg={{item}} force=yes state=installed  
       with_items:
@@ -18,7 +23,6 @@
        - python-pip
        - dmenu
        - git
-       - python-software-properties
        - git-flow
        - dtrx
        - fasd
@@ -26,13 +30,13 @@
        - tree
     
     - name: Download j4-desktop-menu
-      get_url: url=https://github.com/enkore/j4-dmenu-desktop/archive/r2.12.tar.gz dest=/tmp/j4-desktop-menu.tar.gz
+      get_url: url=https://github.com/enkore/j4-dmenu-desktop/archive/r2.17.tar.gz dest=/tmp/j4-desktop-menu.tar.gz
       
     - name: Extract j4-desktop-menu from archive
       unarchive: src=/tmp/j4-desktop-menu.tar.gz dest=/tmp/
       
     - name: Compile j4-desktop-menu and install
-      shell: cmake ./ && make install chdir=/tmp/j4-dmenu-desktop-r2.12
+      shell: cmake ./ && make install chdir=/tmp/j4-dmenu-desktop-r2.17
 
     - name: Install python packages using pip
       pip: name={{item}} state=present
