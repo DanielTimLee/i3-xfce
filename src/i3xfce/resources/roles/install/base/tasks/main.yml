@@ -1,16 +1,19 @@
     - name: Add PPA repositories
       apt_repository: repo='{{item}}' state=present update_cache=true
-      with_items: 
+      with_items:
        - ppa:aacebedo/libi3ipc-glib
-       - ppa:aacebedo/xfce4-i3-workspaces-plugin
-       
+
+    - name: Add Artful (17.10) PPA repositories
+      apt_repository:
+        repo: deb http://ppa.launchpad.net/aacebedo/xfce4-i3-workspaces-plugin/ubuntu artful main
+
     - name: Install i3-wm package using apt
-      apt: pkg={{item}} force=yes state=installed  
+      apt: pkg={{item}} force=yes state=installed
       with_items:
        - i3-wm
        - libi3ipc-glib
        - xfce4-i3-workspaces-plugin
-       - libqt5libqgtk2
+       - qt5-style-plugins
        - libqt5svg5
        - compton
        
