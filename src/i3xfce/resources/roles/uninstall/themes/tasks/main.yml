@@ -6,14 +6,12 @@
     - name: Remove packages using apt
       apt: pkg={{item}} force=yes state=absent  
       with_items:
-       - numix-plymouth-theme
        - numix-folders
        - fonts-powerline
        - numix-gtk-theme
        - numix-icon-theme-circle
        - numix-wallpaper-lightbulb
        - feh
-       - conky
 
     - name: Remove i3 configuration directory
       file: path=/home/{{remote_user}}/.i3 state=absent
@@ -32,18 +30,6 @@
       
     - name: Reset xfce4 icon theme
       lineinfile: dest=/home/{{remote_user}}/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml regexp=".*name=\"IconThemeName\".*" line="<property name=\"IconThemeName\" type=\"string\" value=\"elementary-xfce-dark\"/>"
-    
-    - name: Reset lightdm theme
-      lineinfile: dest=/etc/lightdm/lightdm-gtk-greeter.conf regexp="^theme-name.*" line="theme-name=Greybird" state=present
-    
-    - name: Reset lightdm icon theme
-      lineinfile: dest=/etc/lightdm/lightdm-gtk-greeter.conf regexp="^icon-theme-name.*" line="icon-theme-name=elementary-xfce-dark"  state=present
-    
-    - name: Reset lightdm background (1/2)
-      lineinfile: dest=/etc/lightdm/lightdm-gtk-greeter.conf regexp="^background.*" state=absent
-    
-    - name: Reset lightdm background (2/2)
-      lineinfile: dest=/etc/lightdm/lightdm-gtk-greeter.conf regexp="^user-background.*" state=absent
     
     - name: Remove conky configuration files   
       file: path=/home/{{remote_user}}/.conky/{{ item }} state=absent
