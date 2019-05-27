@@ -6,7 +6,6 @@
        - aptitude
        - dmenu
        - fasd
-       - zsh
        - tree
   
     - name: Remove PPA repositories
@@ -32,6 +31,3 @@
        
     - name: Change back user's shell to bash
       shell: chsh {{remote_user}} -s /bin/bash
-    
-    - name: Remove ohmyzsh
-      file: path=/home/{{remote_user}}/.oh-my-zsh state=absent
