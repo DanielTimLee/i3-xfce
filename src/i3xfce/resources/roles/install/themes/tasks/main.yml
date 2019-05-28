@@ -10,7 +10,6 @@
        - fonts-powerline
        - numix-gtk-theme
        - numix-icon-theme-circle
-       - conky
        - feh
        - xfce4-terminal
 
@@ -25,22 +24,10 @@
     - name: Change i3 configuration directory ownership
       file: path=/home/{{remote_user}}/.i3 recurse='yes' owner={{remote_user}} group={{remote_user}} mode='u=rwX'
 
-    - name: Create conky configuration directory
-      file: path=/home/{{remote_user}}/.conky state=directory
-    
-    - name: Copy conky configuration files
-      copy: src=conky/{{item}} dest=/home/{{remote_user}}/.conky/ owner={{remote_user}} group={{remote_user}} mode='u=rw'
-      with_items:
-       - conkyrc_left
-       - conkyrc_right
-       
-    - name: Change conky configuration directory ownership
-      file: path=/home/{{remote_user}}/.conky recurse='yes' owner={{remote_user}} group={{remote_user}} mode='u=rwX'
-
     - name: Copy compton configuration file
       copy: src=compton/compton.conf dest=/home/{{remote_user}}/.compton.conf owner={{remote_user}} group={{remote_user}} mode='u=rw'
     
-    - name: Change conky configuration directory ownership
+    - name: Change xfce4 configuration directory ownership
       file: path=/home/{{remote_user}}/.config/xfce4/xfconf/xfce-perchannel-xml state=directory owner={{remote_user}} group={{remote_user}} mode='u=rw'
 
     - name: Copy default xfce4 xsettings file

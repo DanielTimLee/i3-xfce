@@ -16,7 +16,6 @@
        - aptitude
        - vim
        - python-dev
-       - conky
        - wget
        - cmake
        - build-essential
