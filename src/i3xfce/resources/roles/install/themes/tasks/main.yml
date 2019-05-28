@@ -7,6 +7,7 @@
       apt: pkg={{item}} force=yes state=installed  
       with_items: 
        - xfce4
+       - fonts-font-awesome
        - fonts-powerline
        - numix-gtk-theme
        - numix-icon-theme-circle
