@@ -2,7 +2,6 @@
       apt: pkg={{item}} force=yes state=installed  
       with_items:
        - wget
-       - build-essential
        - aptitude
        - dmenu
        - fasd
@@ -12,10 +11,6 @@
       apt_repository: repo='{{item}}' state=absent update_cache=true
       with_items: 
        - ppa:aacebedo/fasd
-       - ppa:nilarimogard/webupd8
-
-    - name: Removed fasd shortcut
-      file: path=/usr/local/bin/j4-dmenu-desktop state=absent
     
     - name: Remove python packages using pip
       pip: name={{item}} state=absent

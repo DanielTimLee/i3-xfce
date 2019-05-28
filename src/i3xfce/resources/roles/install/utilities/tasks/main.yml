@@ -17,8 +17,6 @@
        - vim
        - python-dev
        - wget
-       - cmake
-       - build-essential
        - python-pip
        - dmenu
        - git
@@ -26,15 +24,6 @@
        - dtrx
        - fasd
        - tree
-    
-    - name: Download j4-desktop-menu
-      get_url: url=https://github.com/enkore/j4-dmenu-desktop/archive/r2.17.tar.gz dest=/tmp/j4-desktop-menu.tar.gz
-      
-    - name: Extract j4-desktop-menu from archive
-      unarchive: src=/tmp/j4-desktop-menu.tar.gz dest=/tmp/
-      
-    - name: Compile j4-desktop-menu and install
-      shell: cmake ./ && make install chdir=/tmp/j4-dmenu-desktop-r2.17
 
     - name: Install python packages using pip
       pip: name={{item}} state=present
