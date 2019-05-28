@@ -45,7 +45,10 @@
     
     - name: Change xfce notification theme
       copy: src=xfce/xfce4-notifyd.xml dest=/home/{{remote_user}}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-notifyd.xml owner={{remote_user}}  group={{remote_user}} mode='u=rw'
-    
+
+    - name: Change xfce keybindings
+      copy: src=xfce/xfce4-keyboard-shortcuts.xml dest=/home/{{remote_user}}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml owner={{remote_user}}  group={{remote_user}} mode='u=rw'
+
     - name: Add themed fonts      
       copy: src={{item}} dest=/home/{{remote_user}}/.fonts/ owner={{remote_user}} group={{remote_user}} mode='u=rw'
       with_items:
