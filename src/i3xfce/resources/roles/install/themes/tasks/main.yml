@@ -46,6 +46,22 @@
     - name: Change xfce notification theme
       copy: src=xfce/xfce4-notifyd.xml dest=/home/{{remote_user}}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-notifyd.xml owner={{remote_user}}  group={{remote_user}} mode='u=rw'
 
+    - name: Check presence of xfce panel-specific configuration directory
+      file: path=/home/{{remote_user}}/.config/xfce4/panel state=directory
+
+    - name: Copy xfce panel-specific configuration files
+      copy: src=xfce/panel/{{item}} dest=/home/{{remote_user}}/.config/xfce4/panel/ owner={{remote_user}} group={{remote_user}} mode='u=rw'
+      with_items:
+       - i3-workspaces-12.rc
+       - netload-13.rc
+       - systemload-14.rc
+
+    - name: Change xfce panel-specific configuration directory ownership
+      file: path=/home/{{remote_user}}/.config/xfce4/panel recurse='yes' owner={{remote_user}} group={{remote_user}} mode='u=rwX'
+
+    - name: Change xfce panel
+      copy: src=xfce/xfce4-panel.xml dest=/home/{{remote_user}}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml owner={{remote_user}}  group={{remote_user}} mode='u=rw'
+
     - name: Change xfce keybindings
       copy: src=xfce/xfce4-keyboard-shortcuts.xml dest=/home/{{remote_user}}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml owner={{remote_user}}  group={{remote_user}} mode='u=rw'
 
