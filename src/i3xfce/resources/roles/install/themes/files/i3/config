@@ -104,4 +104,4 @@ client.focused_inactive #999999 #999999 #EEEEEE #2D2D2D
 client.unfocused        #999999 #999999 #EEEEEE #2D2D2D 
 client.urgent           #555555 #555555 #FFFFFF #2D2D2D
 
-#exec --no-startup-id  "sh -c 'sleep 1; exec feh --bg-fill /usr/share/backgrounds/Numix_Lightbulb.png'"
+exec --no-startup-id  "sh -c 'sleep 1; exec feh --recursive --randomize --bg-fill ~/Pictures'"
