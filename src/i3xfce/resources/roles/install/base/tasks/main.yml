@@ -1,22 +1,50 @@
-    - name: Add PPA repositories
-      apt_repository: repo='{{item}}' state=present update_cache=true
-      with_items:
-       - ppa:aacebedo/libi3ipc-glib
-
-    - name: Add Artful (17.10) PPA repositories
-      apt_repository:
-        repo: deb http://ppa.launchpad.net/aacebedo/xfce4-i3-workspaces-plugin/ubuntu artful main
-
     - name: Install i3-wm package using apt
       apt: pkg={{item}} force=yes state=installed
       with_items:
        - i3-wm
-       - libi3ipc-glib
-       - xfce4-i3-workspaces-plugin
        - qt5-style-plugins
        - libqt5svg5
        - compton
-       
+       - git
+       - pkg-config             # libi3ipc-glib && xfce4-i3-workspaces-plugin
+       - build-essential        # libi3ipc-glib && xfce4-i3-workspaces-plugin
+       - libgtk2.0-dev          # libi3ipc-glib && xfce4-i3-workspaces-plugin
+       - xcb-proto              # libi3ipc-glib
+       - gtk-doc-tools          # libi3ipc-glib
+       - gobject-introspection  # libi3ipc-glib
+       - libjson-glib-dev       # libi3ipc-glib
+       - xfce4-dev-tools        # xfce4-i3-workspaces-plugin
+       - libxfce4ui-*-dev       # xfce4-i3-workspaces-plugin
+       - xfce4-panel-dev        # xfce4-i3-workspaces-plugin
+
+    - name: Clone i3ipc-glib git
+      git:
+        repo: https://github.com/acrisci/i3ipc-glib.git
+        dest: /tmp/i3ipc-glib
+
+    - name: Compile i3ipc-glib and install
+      shell: cd /tmp/i3ipc-glib && ./autogen.sh --prefix=/usr && make -j && make install
+
+    - name: Clone xfce4-i3-workspaces-plugin git
+      git:
+        repo: https://github.com/denesb/xfce4-i3-workspaces-plugin.git
+        dest: /tmp/xfce4-i3-workspaces-plugin
+
+    - name: Compile xfce4-i3-workspaces-plugin and install
+      shell: cd /tmp/xfce4-i3-workspaces-plugin && ./autogen.sh --prefix=/usr && make -j && make install
+
+    - name: Remove dev packages
+      apt: pkg={{item}} force=yes state=absent
+      with_items:
+       - libgtk2.0-dev          # libi3ipc-glib && xfce4-i3-workspaces-plugin
+       - xcb-proto              # libi3ipc-glib
+       - gtk-doc-tools          # libi3ipc-glib
+       - gobject-introspection  # libi3ipc-glib
+       - libjson-glib-dev       # libi3ipc-glib
+       - xfce4-dev-tools        # xfce4-i3-workspaces-plugin
+       - libxfce4ui-*-dev       # xfce4-i3-workspaces-plugin
+       - xfce4-panel-dev        # xfce4-i3-workspaces-plugin
+
     - name: Copy the autostart scripts
       copy: src=autostart/{{item}} dest=/home/{{remote_user}}/.config/autostart/ owner={{remote_user}} group={{remote_user}} mode='u=rw'
       with_items:
@@ -52,3 +80,4 @@
 
     - name: Change ownership of ~/.config directory 
       file: path=/home/{{remote_user}}/.config recurse='yes' state='directory' owner={{remote_user}} group={{remote_user}} mode='u=rwX'
+
